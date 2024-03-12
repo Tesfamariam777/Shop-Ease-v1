@@ -4,12 +4,16 @@ import { Link } from 'react-router-dom';
 import { auth,signOut } from '../../firebase/firebase.utils';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg';
+import { useSelector } from 'react-redux';
 
 import './header.styles.scss';
 
 
 
-const Header = ({ currentUser }) => (
+const Header = () => {
+const currentUser = useSelector((state) => state.user.currentUser);
+
+return (
   <div className='header'>
     <Link className='logo-container' to='/'>
       <Logo className='logo' />
@@ -31,5 +35,6 @@ const Header = ({ currentUser }) => (
     </div>
   </div>
 );
+}
 
 export default Header;
