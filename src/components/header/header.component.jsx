@@ -5,13 +5,17 @@ import { auth,signOut } from '../../firebase/firebase.utils';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import { useSelector } from 'react-redux';
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
 import './header.styles.scss';
 
 
 
 const Header = () => {
-const currentUser = useSelector((state) => state.user.currentUser);
+  // console.log(useSelector(state => state));
+  let  currentUser = useSelector(state => state.user.currentUser);
+  let hidden = useSelector(state => state.cart.hidden);
 
 return (
   <div className='header'>
@@ -32,7 +36,9 @@ return (
           SIGN IN
         </Link>
       )}
+      <CartIcon />
     </div>
+    {hidden ? null : <CartDropdown />}
   </div>
 );
 }
