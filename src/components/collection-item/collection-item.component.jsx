@@ -4,9 +4,8 @@ import CustomButton from '../custom-button/custom-button.component';
 import { addItem } from '../../redux/cart/cartSlice';
 import { useDispatch } from 'react-redux';
 
-function CollectionItem(item) {
+function CollectionItem({item}) {
   const { name,imageUrl,price } = item;
-
   const dispatch = useDispatch();
   return (
     <div className='collection-item'>
