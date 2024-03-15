@@ -1,19 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+// Initial state
 const initialState = {
-  hidden: true,
+    hidden: true,
+    cartItem: []
 };
 
+// Create slice
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    toggleHiddenCart(state,action) {
-      state.hidden = !state.hidden;
+    toggleHiddenCart: (state) => {
+    state.hidden = !state.hidden;
     },
-  },
+    addItem: (state, action) => {
+      
+      const itemIndex = state.cartItem.findIndex(item => item.id === action.payload.item.id);
+      if (itemIndex >= 0) {
+        // Item exists in cart already, increment quantity
+        state.cartItem[itemIndex].quantity += 1;
+      } else {
+        const {id,name,imageUrl,price} = action.payload.item;
+        // Item does not exist in cart yet, add it with quantity: 1
+        state.cartItem.push({ id,name,imageUrl,price,quantity: 1 });
+      }
+    }
+  }
 });
 
-export const { toggleHiddenCart } = cartSlice.actions;
+export const { addItem, toggleHiddenCart } = cartSlice.actions;
 
-export default cartSlice.reducer; 
+export default cartSlice.reducer;
