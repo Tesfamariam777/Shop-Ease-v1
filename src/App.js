@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect } from 'react';
 import { Routes, Route,Navigate } from 'react-router-dom';
 
 import './App.css';
@@ -12,6 +12,7 @@ import { auth, onAuthStateChanged,createUserProfileDocument,onSnapshot} from './
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { setCurrentUser } from './redux/user/userSlice';
+import CheckoutPage  from './pages/checkout/checkout.component';
 
 
 const App = () => {
@@ -46,6 +47,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/shop' element={<ShopPage />} />
+        <Route path='/checkout' element={<CheckoutPage />} />
         <Route path="/signin" element={currentUser ? <Navigate to="/" /> : <SignInAndSignUpPage />} />
        
       </Routes>
