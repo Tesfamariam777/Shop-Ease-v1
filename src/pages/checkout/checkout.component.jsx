@@ -16,29 +16,29 @@ const CheckoutPage = () => {
 return (
   <div className='checkout-page'>
     <div className='checkout-header'>
-      <div className='header-block'>
+      <div className='header-block product'>
         <span>Product</span>
       </div>
-      <div className='header-block'>
+      <div className='header-block description'>
         <span>Description</span>
       </div>
-      <div className='header-block'>
+      <div className='header-block quantity'>
         <span>Quantity</span>
       </div>
-      <div className='header-block'>
+      <div className='header-block price'>
         <span>Price</span>
       </div>
-      <div className='header-block'>
+      <div className='header-block remove-button'>
         <span>Remove</span>
       </div>
     </div>
     
-    {cartItems && cartItems.map(cartItem => (
-  <CheckoutItem key={cartItem.id} cartItem={cartItem} />
-))}
-    <div className='total'>{`TOTAL: ${total}`}</div>
-  </div>
-)
+    {cartItems && cartItems.map(cartItem =>(
+      <CheckoutItem key={cartItem.id} cartItem={cartItem} />))    
     }
+    <div className='total'>{`TOTAL: ${total}`}</div>
+ </div>
+)
+}
 
 export default CheckoutPage;

@@ -25,7 +25,18 @@ const cartSlice = createSlice({
         // Item does not exist in cart yet, add it with quantity: 1
         state.cartItem.push({ id,name,imageUrl,price,quantity: 1 });
       }
+    },
+    clearItem: (state,action) => {
+      state.cartItem = state.cartItem.filter((item) => item.id !== action.payload.id);
+    },
+    removeItem(state,action){
+      const {id,name,imageUrl,price,quantity} = action.payload;
+      state.cartItem = state.cartItem.map((item)=>{
+        return item.id === action.payload.id ? {id,name,imageUrl,price,quantity:quantity-1} : item;
+      })
     }
+
+
   }
 });
 
@@ -65,6 +76,6 @@ export const selectCartTotal = createSelector(
       : 0
 );
 
-export const { addItem, toggleHiddenCart } = cartSlice.actions;
+export const { addItem,removeItem,clearItem, toggleHiddenCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

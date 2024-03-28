@@ -17,12 +17,20 @@
   
       .header-block {
         text-transform: capitalize;
-        width: 23%;
         align-self: flex-start;
   
         // &:last-child {
         //   width: 8%;
         // }
+      }
+      .product,.description{
+        width: 25%;
+      }
+      .quantity,.price{
+        width: 20%;
+      }
+      .remove-button{
+        width: 10%;
       }
     }
   
