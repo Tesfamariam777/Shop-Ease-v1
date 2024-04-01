@@ -7,6 +7,8 @@ import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
+import CollectionsOverview from './components/collections-overview/collections-overview.component';
+import CollectionPage from './pages/collection/collection.component';
 import { auth, onAuthStateChanged,createUserProfileDocument,onSnapshot} from './firebase/firebase.utils';
 
 import { useDispatch } from 'react-redux';
@@ -46,7 +48,10 @@ const App = () => {
       <Header />
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route path='/shop' element={<ShopPage />} />
+        <Route path='/shop' element={<ShopPage />}>
+          <Route index element={<CollectionsOverview />} />
+          <Route path=":collectionId" element={<CollectionPage />} />  
+        </Route>
         <Route path='/checkout' element={<CheckoutPage />} />
         <Route path="/signin" element={currentUser ? <Navigate to="/" /> : <SignInAndSignUpPage />} />
        
