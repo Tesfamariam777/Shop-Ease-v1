@@ -11,7 +11,7 @@ const CollectionsOverview = () =>
   const collections = useSelector(selectCollectionsForPreview);
   return (
     <div className='collections-overview'>
-        {collections.map(({ id, ...otherCollectionProps }) => (
+        {collections && collections.map(({ id, ...otherCollectionProps }) => (
         <CollectionPreview key={id} {...otherCollectionProps} />
         ))}
     </div>
