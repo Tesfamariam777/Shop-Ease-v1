@@ -1,6 +1,6 @@
 import { initializeApp} from 'firebase/app';
 import { getAuth,signInWithEmailAndPassword,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut,createUserWithEmailAndPassword} from 'firebase/auth';
-import { collection,doc, getDoc,setDoc, getFirestore,onSnapshot,writeBatch} from 'firebase/firestore';
+import { collection,getDocs,doc, getDoc,setDoc, getFirestore,writeBatch} from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAokLFsscIqKiWg8y1O8LDDFd4WuRdbym0",
@@ -17,14 +17,14 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
     'prompt': 'select_account'
   });
 
 
 
-async function signInWithGoogle() {await signInWithPopup(auth, provider)} 
+
 //   .then((result) => {
 //     // This gives you a Google Access Token. You can use it to access the Google API.
 //     const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -80,7 +80,7 @@ export const addCollectionAndDocuments = async (
   
   const batch = writeBatch(db);
   objectsToAdd.forEach((obj) => {
-    const newDocRef = doc(collection(db, collectionKey));
+    const newDocRef = doc(collectionRef);
     
     batch.set(newDocRef, obj);
   });
@@ -107,10 +107,19 @@ export const convertCollectionsSnapshotToMap = collections => {
   }, {});
 };
 
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(auth, async (userAuth) => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
+};
 
 
 
-export {auth,db,signInWithEmailAndPassword,signInWithGoogle,createUserWithEmailAndPassword,onAuthStateChanged,signOut,createUserProfileDocument,onSnapshot};
+
+export {auth,db,signInWithEmailAndPassword,signInWithPopup,googleProvider,createUserWithEmailAndPassword,onAuthStateChanged,signOut,createUserProfileDocument,getDoc,collection,getDocs};
 
 
 

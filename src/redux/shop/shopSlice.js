@@ -1,6 +1,4 @@
 import { createSlice,createSelector } from '@reduxjs/toolkit';
-import { convertCollectionsSnapshotToMap,db} from '../../firebase/firebase.utils';
-import {collection,getDocs} from 'firebase/firestore'
 import memoize from 'lodash.memoize';
 
 const initialState = {
@@ -36,19 +34,6 @@ export const {
 export default shopSlice.reducer;
 
 
-export const fetchCollectionsStartAsync = () => async dispatch => {
-  try {
-    dispatch(fetchCollectionsStart());
-    const collectionRef = collection(db, 'collections');
-    const snapshot = await getDocs(collectionRef);
-    const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-    dispatch(fetchCollectionsSuccess(collectionsMap));
-  } catch (error) {
-    dispatch(fetchCollectionsFailure(error.message));
-  }
-};
-
-
 
 
 //selectors
@@ -81,5 +66,4 @@ export const selectIsCollectionsLoaded = createSelector(
   shop => !!shop.collections
 );
 
-// Export the actions and reducer
-// export const {} = shopSlice.actions;
+

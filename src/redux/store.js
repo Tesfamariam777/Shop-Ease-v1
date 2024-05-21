@@ -1,4 +1,6 @@
 import { configureStore,combineReducers } from '@reduxjs/toolkit';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './root-saga';
 import userReducer from './user/userSlice';
 import cartReducer from './cart/cartSlice';
 import directoryReducer from './directory/directorySlice';
@@ -6,6 +8,8 @@ import shopReducer from './shop/shopSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
+
+const sagaMiddleware = createSagaMiddleware()
 
 const persistConfig = {
   key: 'root',
@@ -23,8 +27,11 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
-  reducer: persistedReducer
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });
+
+sagaMiddleware.run(rootSaga);
  
 export const persistor = persistStore(store);
 

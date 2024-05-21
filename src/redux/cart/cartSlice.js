@@ -34,6 +34,9 @@ const cartSlice = createSlice({
       state.cartItem = state.cartItem.map((item)=>{
         return item.id === action.payload.id ? {id,name,imageUrl,price,quantity:quantity-1} : item;
       })
+    },
+    clearCart: (state) => {
+      state.cartItem = [];
     }
 
 
@@ -76,6 +79,6 @@ export const selectCartTotal = createSelector(
       : 0
 );
 
-export const { addItem,removeItem,clearItem, toggleHiddenCart } = cartSlice.actions;
+export const { addItem,removeItem,clearItem, toggleHiddenCart,clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

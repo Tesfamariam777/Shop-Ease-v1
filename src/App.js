@@ -9,37 +9,15 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 import Header from './components/header/header.component';
 import CollectionPageContainer from './pages/collection/collection.container';
 import CollectionsOverviewContainer from './components/collections-overview/collections-overview.container';
-import { auth, onAuthStateChanged,createUserProfileDocument,onSnapshot,addCollectionAndDocuments} from './firebase/firebase.utils';
-
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { setCurrentUser } from './redux/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import CheckoutPage  from './pages/checkout/checkout.component';
+import { checkUserSession } from './redux/user/userSlice';
 
 const App = () => {
   let currentUser = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
-  let unsubscribeFromAuth = null;
-
   useEffect(() => {
-    unsubscribeFromAuth = onAuthStateChanged(auth, async (userAuth) => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-
-        onSnapshot(userRef, (snapShot) => {
-         dispatch(setCurrentUser({
-          id: snapShot.id,
-          ...snapShot.data()
-        })) 
-        });
-      } else {
-        dispatch(setCurrentUser(userAuth));
-      }
-    });
-    
-    return () => {
-      unsubscribeFromAuth();
-    };
+    dispatch(checkUserSession());
   }, []);
 
   return (
